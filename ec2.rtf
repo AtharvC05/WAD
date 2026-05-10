@@ -1,0 +1,24 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2868
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 1. Launch instances\
+2. Enter name  select ubuntu and select ubuntu 24\
+3. Create new key pair\
+4. Check http options\
+5. Click on instance public ip\
+6. Opem git bash terminal and run sudo chmod 400 file_name.pem\
+7. run ssh -I file_name.pem ubuntu@publicip \
+8. Sudo apt update\
+9. Sudo apt install apache2 -y\
+10. Open new terminal and run scp -I file_name.pem website.zip ubuntu@pubicip:/home/ubuntu\
+11. Open 1st terminal and run sudo apt install unzip and then run unzip website.zip\
+12. Run cd /var/www/html\
+13. run sudo rm index.html\
+14. Run cd ~\
+15. Run sudo cp -r website/* /var/www/html\
+\
+}

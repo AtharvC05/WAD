@@ -1,0 +1,79 @@
+===================================================
+ jQuery Mobile Contacts App - Explanation & Cheat Sheet
+===================================================
+
+This document explains how the `index.html` file works and gives you tricks to easily memorize it for your practical exam.
+
+---------------------------------------------------
+1. THE HTML STRUCTURE (The 3 Pages)
+---------------------------------------------------
+In jQuery Mobile, multiple "pages" are just `<div>` tags in a single HTML file. 
+You only need to remember this basic structure for every page:
+  <div data-role="page" id="someID">
+      <div data-role="header"> ... </div>
+      <div role="main" class="ui-content"> ... </div>
+  </div>
+
+Our app has exactly 3 of these pages:
+  Page 1: id="home" (Shows the list of contacts)
+  Page 2: id="addPage" (The form to add a new contact)
+  Page 3: id="profilePage" (Shows details of a clicked contact)
+
+---------------------------------------------------
+2. MAGIC HTML ATTRIBUTES TO MEMORIZE
+---------------------------------------------------
+You don't need to memorize any custom CSS. Just memorize these `data-` attributes:
+- `data-theme="b"` -> Makes headers look dark and sleek.
+- `data-filter="true"` -> Put this on a <ul> to automatically create a search bar!
+- `data-split-icon="delete"` -> Put this on a <ul> to use a trash can icon for the second link in a list item.
+- `data-transition="slide"` -> Put this on an <a> tag to make the page slide smoothly.
+- `data-clear-btn="true"` -> Put this on an <input> to add an 'X' that clears text.
+
+---------------------------------------------------
+3. THE JAVASCRIPT LOGIC (5 Simple Parts)
+---------------------------------------------------
+The JS is highly compressed. Break it down into 5 chunks in your head:
+
+CHUNK 1: Load Data
+  var contacts = JSON.parse(localStorage.getItem('myContacts')) || [];
+  *Trick to remember:* Always parse it. If it doesn't exist, default to an empty array `[]`.
+
+CHUNK 2: The Render Function (Draw the List)
+  function render() {
+      $('#contactList').empty(); // Clear old list
+      contacts.forEach((c, i) => { ... append HTML ... }); // Loop & Add
+      $('#contactList').listview('refresh'); // Tell jQuery Mobile to style it
+  }
+  *Trick to remember:* Empty -> Loop -> Refresh.
+  *Split-Button Trick:* Inside the loop, putting TWO `<a>` tags inside an `<li>` automatically creates the right-aligned delete button.
+
+CHUNK 3: Display List on Load
+  $(document).on("pagebeforeshow", "#home", render);
+  *Trick to remember:* Before the "#home" page shows, simply call the `render` function.
+
+CHUNK 4: Save Button
+  $('#saveBtn').click(function() { ... });
+  *Trick to remember flow:* Get values -> push() to array -> setItem() in localStorage -> Change Page.
+  *Shortcut used:* `$('input').val('');` magically clears ALL 4 inputs at once!
+
+CHUNK 5: Delete & Profile Clicks
+  $(document).on("click", ".delBtn", function() { ... });
+  $(document).on("click", ".profileBtn", function() { ... });
+  *Trick to remember:* We use `data-index="${i}"` in the HTML so the button knows which array item it was.
+  - Delete gets the index and uses `contacts.splice(index, 1)` to remove it.
+  - Profile gets the index to read the data, updates the HTML of `#profilePage`, and then uses `$.mobile.changePage`.
+
+---------------------------------------------------
+4. EXAM MNEMONIC (H.A.P. R.S.D.P)
+---------------------------------------------------
+Memorize this acronym to build the app from scratch during the exam:
+HTML: H.A.P (Home, Add, Profile)
+  - Create the 3 page divs first.
+
+JS: R.S.D.P (Render, Save, Delete, Profile)
+  - Write the Render function.
+  - Write the Save click event.
+  - Write the Delete click event.
+  - Write the Profile click event.
+
+If you remember H.A.P and R.S.D.P, you will easily remember the order of everything you need to write!

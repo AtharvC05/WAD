@@ -1,0 +1,54 @@
+EXPLANATION OF THE REGISTRATION APP CODE
+========================================
+
+1. OVERVIEW
+This application consists of two files: 'index.html' (for user registration) and 'user.html' (to display the registered users). Data is stored locally in the browser using 'localStorage', and an AJAX POST request is simulated to satisfy the requirement.
+
+2. INDEX.HTML (The Registration Form)
+-------------------------------------
+- HTML/CSS: It contains a basic form with 'Name' and 'Email' inputs. The CSS uses 'margin: 50px auto' to easily center the content on the screen.
+
+- JavaScript Logic:
+  * document.getElementById('regForm').onsubmit = function(e)
+    This triggers when the user clicks the "Register" button.
+  * e.preventDefault();
+    This prevents the default behavior of forms, which is to refresh the page.
+  * let user = { name: ..., email: ... };
+    We grab the values typed into the input boxes and bundle them into a JavaScript Object.
+
+*** HOW THE AJAX POST WORKS (CRITICAL FOR EXAM) ***
+We use the modern 'fetch()' API to perform the AJAX POST request.
+
+Code: 
+fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    body: JSON.stringify(user)
+}).then(() => { ... })
+
+Explanation:
+- fetch(URL, {options}): This is the standard JavaScript function used to make asynchronous network requests (AJAX).
+- URL: We send the request to a free dummy testing API ('jsonplaceholder').
+- method: 'POST': This tells the server that we are sending new data to be saved.
+- body: JSON.stringify(user): Servers communicate via text. We must convert our JavaScript 'user' object into a JSON string format before sending it over the network.
+- .then(() => { ... }): Network requests take time. The '.then()' block pauses and waits for the server to successfully respond. Once the server says "OK", it executes the code inside the block.
+
+- Local Storage (Inside the .then() block):
+  * JSON.parse(localStorage.getItem('users')) || []: We ask the browser for any previously saved users. If none exist, we start with a blank array [].
+  * users.push(user): We add the newly registered user to this array.
+  * localStorage.setItem('users', JSON.stringify(users)): We convert the array back into a text string and save it back into the browser's permanent memory.
+  * window.location.href = 'user.html': Finally, we redirect the user to the second page.
+
+
+3. USER.HTML (The Data List Page)
+---------------------------------
+- HTML/CSS: Contains an empty HTML table with "Name" and "Email" headers.
+
+- JavaScript Logic:
+  * let users = JSON.parse(localStorage.getItem('users')) || []: Grabs the saved array of users from local storage and turns it back into a usable JavaScript array.
+  * let table = document.getElementById('userTable'): Finds the HTML table element.
+  * users.forEach(user => { ... }): Loops through every single user in our array.
+  
+  Inside the loop, for each user:
+  - let row = table.insertRow(): Dynamically creates a new empty row (<tr>) in the table.
+  - row.insertCell(0).innerText = user.name: Creates the first column (<td>) in that row and inserts the user's name.
+  - row.insertCell(1).innerText = user.email: Creates the second column (<td>) and inserts the user's email.

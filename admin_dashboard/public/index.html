@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <!-- Minimal Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            
+            <!-- Sidebar (3 columns, full height, dark background) -->
+            <div class="col-3 bg-dark text-white min-vh-100 p-3">
+                <h2>EduAdmin</h2>
+                <hr>
+                <!-- Added nav-pills and data-bs-toggle="pill" to make tabs work -->
+                <ul class="nav flex-column nav-pills">
+                    <li class="nav-item">
+                        <a href="#dashboard" class="nav-link text-white active" data-bs-toggle="pill">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#students" class="nav-link text-white" data-bs-toggle="pill">Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#courses" class="nav-link text-white" data-bs-toggle="pill">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#exams" class="nav-link text-white" data-bs-toggle="pill">Exams</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content (9 columns) -->
+            <div class="col-9 p-4 bg-light">
+                
+                <!-- Tab Content Wrapper -->
+                <div class="tab-content">
+                    
+                    <!-- Dashboard Section -->
+                    <div class="tab-pane fade show active" id="dashboard">
+                        <div class="alert alert-info">
+                            <strong>Notice:</strong> Semester exams will begin next week!
+                        </div>
+
+                        <h2>College Dashboard</h2>
+                        <br>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card text-center text-white bg-primary mb-3">
+                                    <div class="card-body"><h3>1,200</h3><p>Total Students</p></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-center text-white bg-success mb-3">
+                                    <div class="card-body"><h3>85</h3><p>Total Faculty</p></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-center text-dark bg-warning mb-3">
+                                    <div class="card-body"><h3>5</h3><p>Active Exams</p></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <h3>Recent Admissions</h3>
+                        <table class="table table-bordered table-striped mt-3">
+                            <thead class="table-dark">
+                                <tr><th>Roll No</th><th>Student Name</th><th>Department</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>101</td><td>John Doe</td><td>Computer Science</td><td><span class="badge bg-success">Enrolled</span></td></tr>
+                                <tr><td>102</td><td>Jane Smith</td><td>Mechanical Engg</td><td><span class="badge bg-warning text-dark">Pending</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Students Section -->
+                    <div class="tab-pane fade" id="students">
+                        <h2>Manage Students</h2>
+                        <ul class="list-group mt-3">
+                            <li class="list-group-item">Alice Smith - <span class="badge bg-primary">A+</span></li>
+                            <li class="list-group-item">Bob Johnson - <span class="badge bg-secondary">B</span></li>
+                        </ul>
+                        <button class="btn btn-success mt-3">Add Student</button>
+                    </div>
+
+                    <!-- Courses Section -->
+                    <div class="tab-pane fade" id="courses">
+                        <h2>Manage Courses</h2>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="card border-primary mb-3">
+                                    <div class="card-body"><h5>Computer Science</h5><p>4 Year Program</p></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-success mb-3">
+                                    <div class="card-body"><h5>Mechanical Engg</h5><p>4 Year Program</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exams Section -->
+                    <div class="tab-pane fade" id="exams">
+                        <h2>Manage Exams</h2>
+                        <ul class="list-group mt-3">
+                            <li class="list-group-item list-group-item-danger">Mid-Term Exams (Starts Oct 15)</li>
+                            <li class="list-group-item list-group-item-warning">Final Exams (Starts Dec 10)</li>
+                        </ul>
+                    </div>
+
+                </div> <!-- End of Tab Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (Required to make the Sidebar Links click and switch tabs automatically) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

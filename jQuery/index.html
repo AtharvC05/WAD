@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contacts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+    <div data-role="page" id="home">
+        <div data-role="header" data-theme="b">
+            <h1>Contacts</h1>
+            <a href="#addPage" data-icon="plus" class="ui-btn-right">Add</a>
+        </div>
+        <div role="main" class="ui-content">
+            <ul id="contactList" data-role="listview" data-filter="true" data-split-icon="delete"></ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="addPage">
+        <div data-role="header" data-theme="b">
+            <a href="#home" data-icon="carat-l">Back</a>
+            <h1>New Contact</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <input type="text" id="cName" placeholder="Name">
+            <input type="tel" id="cPhone" placeholder="Phone">
+            <input type="email" id="cEmail" placeholder="Email">
+            <input type="url" id="cPhoto" placeholder="Photo URL">
+            <button id="saveBtn" class="ui-btn ui-btn-b">Save</button>
+        </div>
+    </div>
+
+    <div data-role="page" id="profilePage">
+        <div data-role="header" data-theme="b">
+            <a href="#home" data-icon="carat-l">Back</a>
+            <h1>Profile</h1>
+        </div>
+        <div role="main" class="ui-content" style="text-align:center;">
+            <img id="pPhoto" src="" style="width:120px; border-radius:50%; margin-top:20px;">
+            <h2 id="pName"></h2>
+            <a href="#" id="pPhoneBtn" class="ui-btn ui-icon-phone ui-btn-icon-left">Call</a>
+            <a href="#" id="pEmailBtn" class="ui-btn ui-icon-mail ui-btn-icon-left">Email</a>
+        </div>
+    </div>
+
+    <script>
+        var contacts = JSON.parse(localStorage.myContacts || '[]');
+        var dImg = "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
+
+        function save() {
+            localStorage.myContacts = JSON.stringify(contacts);
+            render();
+        }
+
+        function render() {
+            var list = $('#contactList').empty();
+            contacts.forEach((c, i) => {
+                list.append(`<li>
+                    <a href="#" class="profileBtn" data-index="${i}">
+                        <img src="${c.photo || dImg}"><h2>${c.name}</h2><p>${c.phone} | ${c.email || 'N/A'}</p>
+                    </a>
+                    <a href="#" class="delBtn" data-index="${i}">Delete</a>
+                </li>`);
+            });
+            try { list.listview('refresh'); } catch(e) {}
+        }
+
+        $(document).on("pagebeforeshow", "#home", render);
+
+        $('#saveBtn').click(function() {
+            var n = $('#cName').val(), p = $('#cPhone').val();
+            if(!n || !p) return alert("Name & Phone Required!");
+            
+            contacts.push({ name: n, phone: p, email: $('#cEmail').val(), photo: $('#cPhoto').val() });
+            $('input').val('');
+            save();
+            $.mobile.changePage("#home");
+        });
+
+        $(document).on("click", ".delBtn", function() {
+            contacts.splice($(this).data('index'), 1);
+            save();
+        });
+
+        $(document).on("click", ".profileBtn", function() {
+            var c = contacts[$(this).data('index')];
+            $('#pPhoto').attr('src', c.photo || dImg);
+            $('#pName').text(c.name);
+            $('#pPhoneBtn').text('Call: ' + c.phone).attr('href', 'tel:' + c.phone);
+            $('#pEmailBtn').text('Email: ' + c.email).attr('href', 'mailto:' + c.email).toggle(!!c.email);
+            $.mobile.changePage("#profilePage");
+        });
+    </script>
+</body>
+</html>
