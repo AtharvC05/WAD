@@ -1,0 +1,6 @@
+<div style="max-width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; text-align: left;" *ngIf="user">
+  <h2>User Profile</h2>
+  <p><strong>Name:</strong> {{user.name}}</p>
+  <p><strong>Email:</strong> {{user.email}}</p>
+  <button (click)="logout()" style="width: 100%; padding: 8px; margin-top: 10px; background-color: #dc3545; color: white; border: none; cursor: pointer;">Logout</button>
+</div>
